@@ -30,9 +30,9 @@ export function CustomCursor() {
     };
   }, [x, y]);
 
-  const size = mode === "default" ? 14 : 96;
+  const size = mode === "default" ? 14 : mode === "link" ? 36 : 96;
   const label =
-    mode === "uiux" ? "WIRES" : mode === "code" ? "CODE" : mode === "link" ? "OPEN" : "";
+    mode === "uiux" ? "WIRES" : mode === "code" ? "CODE" : mode === "link" ? "→" : "";
 
   return (
     <>
