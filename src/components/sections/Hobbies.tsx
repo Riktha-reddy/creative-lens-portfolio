@@ -59,9 +59,10 @@ function HobbyCard({ h, i }: { h: (typeof hobbies)[number]; i: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, delay: i * 0.07 }}
+      whileHover={{ scale: 1.04, y: -8 }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group relative overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklab,var(--cream)_4%,var(--ink))]"
+      className="group relative overflow-hidden rounded-2xl border border-border bg-[color-mix(in_oklab,var(--cream)_4%,var(--ink))] transition-shadow duration-300 hover:shadow-[0_24px_48px_-12px_rgba(0,0,0,0.5)]"
     >
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
@@ -93,7 +94,7 @@ function HobbyCard({ h, i }: { h: (typeof hobbies)[number]; i: number }) {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[var(--ink)]/20 to-transparent" />
 
         {/* Progress dots */}
         <div className="absolute top-4 right-4 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -108,14 +109,14 @@ function HobbyCard({ h, i }: { h: (typeof hobbies)[number]; i: number }) {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 p-6">
+      <div className="absolute inset-x-0 bottom-0 p-5">
         <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/70">
           0{i + 1} / {h.sub}
         </div>
-        <div className="mt-2 font-display text-3xl md:text-4xl font-semibold tracking-tight">
+        <div className="mt-1 font-display text-2xl md:text-3xl font-semibold tracking-tight">
           {h.title}
         </div>
-        <p className="mt-2 text-sm text-foreground/80 max-w-xs text-pretty">{h.body}</p>
+        <p className="mt-1 text-xs text-foreground/80 max-w-xs text-pretty">{h.body}</p>
       </div>
     </motion.div>
   );
