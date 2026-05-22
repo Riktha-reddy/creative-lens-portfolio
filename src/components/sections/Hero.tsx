@@ -53,7 +53,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="block"
           >
-            <span className="text-primary bg-[var(--cream)] px-3">Developer.</span>
+            <span className="inline-block text-primary bg-[var(--cream)] px-2 leading-[0.95] py-0">Developer.</span>
           </motion.span>
         </h1>
 
@@ -95,25 +95,6 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Footer bar */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/60 pt-8 border-t border-border">
-        <div>
-          <div className="text-foreground text-2xl font-display tracking-tight normal-case">6+</div>
-          <div className="mt-1">Years shipping</div>
-        </div>
-        <div>
-          <div className="text-foreground text-2xl font-display tracking-tight normal-case">40+</div>
-          <div className="mt-1">Products launched</div>
-        </div>
-        <div>
-          <div className="text-foreground text-2xl font-display tracking-tight normal-case">12</div>
-          <div className="mt-1">Design systems</div>
-        </div>
-        <div>
-          <div className="text-foreground text-2xl font-display tracking-tight normal-case">∞</div>
-          <div className="mt-1">Cups of espresso</div>
-        </div>
-      </div>
     </section>
   );
 }
