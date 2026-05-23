@@ -101,6 +101,7 @@ export function ProjectCard({ kind, title, tag, description, meta, reveal, index
           )}
         </AnimatePresence>
       </motion.article>
+      </Link>
     </Magnetic>
   );
 }
