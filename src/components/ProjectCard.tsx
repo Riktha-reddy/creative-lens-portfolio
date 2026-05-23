@@ -23,6 +23,13 @@ export function ProjectCard({ kind, title, tag, description, meta, reveal, index
 
   return (
     <Magnetic strength={0.12} className="block w-full">
+      <Link
+        to="/projects/$slug"
+        params={{ slug }}
+        className="block"
+        onMouseEnter={() => setCursorMode("link")}
+        onMouseLeave={() => setCursorMode("default")}
+      >
       <motion.article
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
