@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { Link } from "@tanstack/react-router";
 import { setCursorMode } from "./CustomCursor";
 import { Magnetic } from "./Magnetic";
 
@@ -14,13 +15,21 @@ interface ProjectCardProps {
   /** raw code OR wireframe label / sketches markup */
   reveal: ReactNode;
   index: number;
+  slug: string;
 }
 
-export function ProjectCard({ kind, title, tag, description, meta, reveal, index }: ProjectCardProps) {
+export function ProjectCard({ kind, title, tag, description, meta, reveal, index, slug }: ProjectCardProps) {
   const [hover, setHover] = useState(false);
 
   return (
     <Magnetic strength={0.12} className="block w-full">
+      <Link
+        to="/projects/$slug"
+        params={{ slug }}
+        className="block"
+        onMouseEnter={() => setCursorMode("link")}
+        onMouseLeave={() => setCursorMode("default")}
+      >
       <motion.article
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -92,6 +101,7 @@ export function ProjectCard({ kind, title, tag, description, meta, reveal, index
           )}
         </AnimatePresence>
       </motion.article>
+      </Link>
     </Magnetic>
   );
 }
