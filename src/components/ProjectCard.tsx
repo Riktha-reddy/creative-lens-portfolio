@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { Link } from "@tanstack/react-router";
 import { setCursorMode } from "./CustomCursor";
 import { Magnetic } from "./Magnetic";
 
@@ -14,9 +15,10 @@ interface ProjectCardProps {
   /** raw code OR wireframe label / sketches markup */
   reveal: ReactNode;
   index: number;
+  slug: string;
 }
 
-export function ProjectCard({ kind, title, tag, description, meta, reveal, index }: ProjectCardProps) {
+export function ProjectCard({ kind, title, tag, description, meta, reveal, index, slug }: ProjectCardProps) {
   const [hover, setHover] = useState(false);
 
   return (
