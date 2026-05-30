@@ -188,8 +188,39 @@ function UIUXBody({ p }: { p: ProjectData }) {
           </div>
         </Section>
       )}
+      {p.wireframes && p.wireframes.length > 0 && (
+        <Section index="04" title="Wireframes">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {p.wireframes.map((w, i) => (
+              <motion.figure
+                key={w.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="group rounded-2xl border border-border p-5 bg-[color-mix(in_oklab,var(--cream)_3%,var(--ink))] hover:border-foreground/40 transition-colors"
+              >
+                <div className="aspect-[4/3] flex items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--cream)_2%,var(--ink))] border border-border/60 overflow-hidden">
+                  <Wireframe type={w.type} seed={i} />
+                </div>
+                <figcaption className="mt-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h4 className="font-display text-lg font-semibold">{w.title}</h4>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-foreground/50 border border-border rounded-full px-2 py-0.5">
+                      {w.type}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-foreground/70 leading-relaxed">
+                    {w.caption}
+                  </p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </Section>
+      )}
       {p.outcomes && p.outcomes.length > 0 && (
-        <Section index="04" title="Outcomes">
+        <Section index="05" title="Outcomes">
           <ul className="space-y-3">
             {p.outcomes.map((o) => (
               <li
