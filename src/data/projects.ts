@@ -237,6 +237,11 @@ await channel.subscribe("room:42");`,
       "Net Promoter Score: 64",
       "Featured by App Store in Health & Fitness",
     ],
+    wireframes: [
+      { title: "Daily check-in", caption: "Three-tap symptom logger with mood scale", type: "mobile" },
+      { title: "Medication reminder", caption: "Calm full-screen prompt with snooze & log", type: "mobile" },
+      { title: "Care timeline", caption: "Vertical history of meds, symptoms & visits", type: "mobile" },
+    ],
   },
   {
     slug: "atlas-edge-router",
