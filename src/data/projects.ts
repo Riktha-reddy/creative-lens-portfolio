@@ -154,6 +154,12 @@ await channel.subscribe("room:42");`,
       "QA defects related to UI inconsistency down 67%",
       "New feature design-to-ship cycle: 3 weeks → 6 days",
     ],
+    wireframes: [
+      { title: "Dispatcher console", caption: "Multi-pane layout with live fleet map", type: "desktop" },
+      { title: "Warehouse tablet", caption: "High-contrast pick-list for bright environments", type: "desktop" },
+      { title: "Driver app", caption: "Glanceable next-stop card with one-tap actions", type: "mobile" },
+      { title: "Token gallery", caption: "Storybook view of color, type & spacing tokens", type: "desktop" },
+    ],
   },
   {
     slug: "glyph-cli",
