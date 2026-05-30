@@ -19,6 +19,7 @@ export interface ProjectData {
   overview?: string;
   problem?: string;
   process?: { title: string; body: string }[];
+  wireframes?: { title: string; caption: string; type: "mobile" | "desktop" }[];
   outcomes?: string[];
   // Technical
   longDescription?: string;
@@ -66,6 +67,12 @@ export const projects: ProjectData[] = [
       "Task success on disputes: 62% → 94%",
       "Perceived trust score: +41% vs. control",
       "Concept won internal innovation pitch and moved to pilot",
+    ],
+    wireframes: [
+      { title: "Onboarding", caption: "3-step signup with plain-language consent", type: "mobile" },
+      { title: "Account home", caption: "Balance, recent activity, fee transparency strip", type: "mobile" },
+      { title: "Transfer flow", caption: "Show-the-math sheet before confirm", type: "mobile" },
+      { title: "Dispute center", caption: "Web dashboard for tracking & evidence upload", type: "desktop" },
     ],
   },
   {
@@ -147,6 +154,12 @@ await channel.subscribe("room:42");`,
       "QA defects related to UI inconsistency down 67%",
       "New feature design-to-ship cycle: 3 weeks → 6 days",
     ],
+    wireframes: [
+      { title: "Dispatcher console", caption: "Multi-pane layout with live fleet map", type: "desktop" },
+      { title: "Warehouse tablet", caption: "High-contrast pick-list for bright environments", type: "desktop" },
+      { title: "Driver app", caption: "Glanceable next-stop card with one-tap actions", type: "mobile" },
+      { title: "Token gallery", caption: "Storybook view of color, type & spacing tokens", type: "desktop" },
+    ],
   },
   {
     slug: "glyph-cli",
@@ -223,6 +236,11 @@ await channel.subscribe("room:42");`,
       "Daily check-in adherence: 38% → 71%",
       "Net Promoter Score: 64",
       "Featured by App Store in Health & Fitness",
+    ],
+    wireframes: [
+      { title: "Daily check-in", caption: "Three-tap symptom logger with mood scale", type: "mobile" },
+      { title: "Medication reminder", caption: "Calm full-screen prompt with snooze & log", type: "mobile" },
+      { title: "Care timeline", caption: "Vertical history of meds, symptoms & visits", type: "mobile" },
     ],
   },
   {

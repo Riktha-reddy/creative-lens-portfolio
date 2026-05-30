@@ -188,8 +188,39 @@ function UIUXBody({ p }: { p: ProjectData }) {
           </div>
         </Section>
       )}
+      {p.wireframes && p.wireframes.length > 0 && (
+        <Section index="04" title="Wireframes">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {p.wireframes.map((w, i) => (
+              <motion.figure
+                key={w.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.06 }}
+                className="group rounded-2xl border border-border p-5 bg-[color-mix(in_oklab,var(--cream)_3%,var(--ink))] hover:border-foreground/40 transition-colors"
+              >
+                <div className="aspect-[4/3] flex items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--cream)_2%,var(--ink))] border border-border/60 overflow-hidden">
+                  <Wireframe type={w.type} seed={i} />
+                </div>
+                <figcaption className="mt-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h4 className="font-display text-lg font-semibold">{w.title}</h4>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-foreground/50 border border-border rounded-full px-2 py-0.5">
+                      {w.type}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs text-foreground/70 leading-relaxed">
+                    {w.caption}
+                  </p>
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </Section>
+      )}
       {p.outcomes && p.outcomes.length > 0 && (
-        <Section index="04" title="Outcomes">
+        <Section index="05" title="Outcomes">
           <ul className="space-y-3">
             {p.outcomes.map((o) => (
               <li
@@ -307,5 +338,97 @@ function Section({
       </div>
       <div className="md:pl-12">{children}</div>
     </motion.section>
+  );
+}
+
+function Wireframe({ type, seed }: { type: "mobile" | "desktop"; seed: number }) {
+  const stroke = "color-mix(in oklab, var(--cream) 30%, transparent)";
+  const fill = "color-mix(in oklab, var(--cream) 6%, transparent)";
+  const accent = "var(--cream)";
+
+  if (type === "mobile") {
+    const variants = [
+      // 0: list feed
+      <g key="a">
+        <rect x="110" y="30" width="80" height="6" rx="3" fill={stroke} />
+        <rect x="40" y="55" width="220" height="36" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="100" width="220" height="36" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="145" width="220" height="36" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="190" width="220" height="36" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="260" width="220" height="32" rx="16" fill={accent} opacity="0.85" />
+      </g>,
+      // 1: hero card
+      <g key="b">
+        <rect x="40" y="30" width="220" height="110" rx="10" fill={fill} stroke={stroke} />
+        <circle cx="80" cy="75" r="16" fill={stroke} />
+        <rect x="105" y="65" width="120" height="8" rx="4" fill={stroke} />
+        <rect x="105" y="80" width="80" height="6" rx="3" fill={stroke} opacity="0.6" />
+        <rect x="55" y="110" width="190" height="18" rx="9" fill={accent} opacity="0.85" />
+        <rect x="40" y="160" width="220" height="50" rx="8" fill={fill} stroke={stroke} />
+        <rect x="40" y="220" width="220" height="50" rx="8" fill={fill} stroke={stroke} />
+      </g>,
+      // 2: form
+      <g key="c">
+        <rect x="40" y="30" width="160" height="10" rx="5" fill={stroke} />
+        <rect x="40" y="65" width="220" height="28" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="105" width="220" height="28" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="145" width="220" height="80" rx="6" fill={fill} stroke={stroke} />
+        <rect x="40" y="245" width="220" height="32" rx="16" fill={accent} opacity="0.85" />
+      </g>,
+    ];
+    return (
+      <svg viewBox="0 0 300 320" className="w-[55%] h-auto" aria-hidden>
+        <rect x="20" y="6" width="260" height="308" rx="28" fill="none" stroke={stroke} strokeWidth="2" />
+        <rect x="120" y="14" width="60" height="6" rx="3" fill={stroke} />
+        {variants[seed % variants.length]}
+      </svg>
+    );
+  }
+
+  const variants = [
+    // 0: dashboard
+    <g key="a">
+      <rect x="20" y="50" width="100" height="180" rx="6" fill={fill} stroke={stroke} />
+      <rect x="135" y="50" width="245" height="80" rx="6" fill={fill} stroke={stroke} />
+      <rect x="135" y="145" width="115" height="85" rx="6" fill={fill} stroke={stroke} />
+      <rect x="265" y="145" width="115" height="85" rx="6" fill={accent} opacity="0.85" />
+    </g>,
+    // 1: table
+    <g key="b">
+      <rect x="20" y="50" width="360" height="24" rx="4" fill={fill} stroke={stroke} />
+      <rect x="20" y="82" width="360" height="20" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="20" y="108" width="360" height="20" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="20" y="134" width="360" height="20" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="20" y="160" width="360" height="20" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="20" y="186" width="360" height="20" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="300" y="218" width="80" height="20" rx="10" fill={accent} opacity="0.85" />
+    </g>,
+    // 2: gallery
+    <g key="c">
+      <rect x="20" y="50" width="115" height="85" rx="6" fill={fill} stroke={stroke} />
+      <rect x="145" y="50" width="115" height="85" rx="6" fill={fill} stroke={stroke} />
+      <rect x="270" y="50" width="110" height="85" rx="6" fill={accent} opacity="0.85" />
+      <rect x="20" y="145" width="115" height="85" rx="6" fill={fill} stroke={stroke} />
+      <rect x="145" y="145" width="115" height="85" rx="6" fill={accent} opacity="0.85" />
+      <rect x="270" y="145" width="110" height="85" rx="6" fill={fill} stroke={stroke} />
+    </g>,
+    // 3: split
+    <g key="d">
+      <rect x="20" y="50" width="170" height="180" rx="6" fill={fill} stroke={stroke} />
+      <rect x="205" y="50" width="175" height="40" rx="4" fill={stroke} opacity="0.4" />
+      <rect x="205" y="100" width="175" height="14" rx="3" fill={fill} stroke={stroke} />
+      <rect x="205" y="122" width="140" height="10" rx="3" fill={fill} stroke={stroke} opacity="0.7" />
+      <rect x="205" y="190" width="100" height="28" rx="14" fill={accent} opacity="0.85" />
+    </g>,
+  ];
+  return (
+    <svg viewBox="0 0 400 250" className="w-[88%] h-auto" aria-hidden>
+      <rect x="6" y="6" width="388" height="238" rx="10" fill="none" stroke={stroke} strokeWidth="2" />
+      <circle cx="20" cy="22" r="3" fill={stroke} />
+      <circle cx="32" cy="22" r="3" fill={stroke} />
+      <circle cx="44" cy="22" r="3" fill={stroke} />
+      <line x1="6" y1="38" x2="394" y2="38" stroke={stroke} strokeWidth="1" />
+      {variants[seed % variants.length]}
+    </svg>
   );
 }
