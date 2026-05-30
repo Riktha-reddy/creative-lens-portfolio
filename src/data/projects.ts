@@ -19,6 +19,7 @@ export interface ProjectData {
   overview?: string;
   problem?: string;
   process?: { title: string; body: string }[];
+  wireframes?: { title: string; caption: string; type: "mobile" | "desktop" }[];
   outcomes?: string[];
   // Technical
   longDescription?: string;
