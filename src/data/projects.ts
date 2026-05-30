@@ -68,6 +68,12 @@ export const projects: ProjectData[] = [
       "Perceived trust score: +41% vs. control",
       "Concept won internal innovation pitch and moved to pilot",
     ],
+    wireframes: [
+      { title: "Onboarding", caption: "3-step signup with plain-language consent", type: "mobile" },
+      { title: "Account home", caption: "Balance, recent activity, fee transparency strip", type: "mobile" },
+      { title: "Transfer flow", caption: "Show-the-math sheet before confirm", type: "mobile" },
+      { title: "Dispute center", caption: "Web dashboard for tracking & evidence upload", type: "desktop" },
+    ],
   },
   {
     slug: "pulse-realtime-sdk",
