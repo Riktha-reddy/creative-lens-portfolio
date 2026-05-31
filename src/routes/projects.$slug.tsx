@@ -4,6 +4,13 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Nav } from "@/components/Nav";
 import { getProject, type ProjectData } from "@/data/projects";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/projects/$slug")({
   component: ProjectPage,
