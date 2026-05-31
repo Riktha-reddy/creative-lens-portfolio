@@ -4,6 +4,13 @@ import { ArrowLeft, ExternalLink, Github } from "lucide-react";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Nav } from "@/components/Nav";
 import { getProject, type ProjectData } from "@/data/projects";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/projects/$slug")({
   component: ProjectPage,
@@ -190,6 +197,16 @@ function UIUXBody({ p }: { p: ProjectData }) {
       )}
       {p.wireframes && p.wireframes.length > 0 && (
         <Section index="04" title="Wireframes">
+          {/* Low-fidelity */}
+          <div className="mb-10 flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+              Low fidelity
+            </span>
+            <span className="h-px flex-1 bg-border" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              Sketches & structure
+            </span>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {p.wireframes.map((w, i) => (
               <motion.figure
@@ -217,6 +234,52 @@ function UIUXBody({ p }: { p: ProjectData }) {
               </motion.figure>
             ))}
           </div>
+
+          {/* High-fidelity carousel */}
+          <div className="mt-16 mb-8 flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+              High fidelity
+            </span>
+            <span className="h-px flex-1 bg-border" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              Polished mockups
+            </span>
+          </div>
+          <Carousel opts={{ align: "start", loop: true }} className="px-2">
+            <CarouselContent>
+              {p.wireframes.map((w, i) => (
+                <CarouselItem
+                  key={`hi-${w.title}`}
+                  className="md:basis-1/2 lg:basis-1/2"
+                >
+                  <motion.figure
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    className="rounded-2xl border border-border p-5 bg-[color-mix(in_oklab,var(--cream)_4%,var(--ink))]"
+                  >
+                    <div className="aspect-[4/3] flex items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--cream)_6%,var(--ink))] border border-border overflow-hidden">
+                      <HiFiMockup type={w.type} seed={i} />
+                    </div>
+                    <figcaption className="mt-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="font-display text-lg font-semibold">{w.title}</h4>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--cream)] border border-[var(--cream)]/40 rounded-full px-2 py-0.5">
+                          Hi-fi
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs text-foreground/70 leading-relaxed">
+                        {w.caption}
+                      </p>
+                    </figcaption>
+                  </motion.figure>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
         </Section>
       )}
       {p.outcomes && p.outcomes.length > 0 && (
@@ -428,6 +491,132 @@ function Wireframe({ type, seed }: { type: "mobile" | "desktop"; seed: number })
       <circle cx="32" cy="22" r="3" fill={stroke} />
       <circle cx="44" cy="22" r="3" fill={stroke} />
       <line x1="6" y1="38" x2="394" y2="38" stroke={stroke} strokeWidth="1" />
+      {variants[seed % variants.length]}
+    </svg>
+  );
+}
+
+function HiFiMockup({ type, seed }: { type: "mobile" | "desktop"; seed: number }) {
+  const bg = "color-mix(in oklab, var(--cream) 96%, var(--ink))";
+  const surface = "color-mix(in oklab, var(--cream) 88%, var(--ink))";
+  const muted = "color-mix(in oklab, var(--cream) 70%, var(--ink))";
+  const line = "color-mix(in oklab, var(--ink) 18%, transparent)";
+  const text = "color-mix(in oklab, var(--ink) 75%, transparent)";
+  const accent = "var(--primary)";
+  const accentText = "var(--cream)";
+
+  if (type === "mobile") {
+    const variants = [
+      // 0: app home
+      <g key="a">
+        <rect x="36" y="58" width="228" height="22" rx="6" fill={text} opacity="0.85" />
+        <rect x="36" y="88" width="140" height="10" rx="4" fill={muted} />
+        <rect x="36" y="118" width="228" height="70" rx="12" fill={accent} />
+        <rect x="50" y="134" width="80" height="8" rx="4" fill={accentText} opacity="0.85" />
+        <rect x="50" y="150" width="140" height="14" rx="4" fill={accentText} />
+        <rect x="50" y="172" width="60" height="8" rx="4" fill={accentText} opacity="0.7" />
+        <rect x="36" y="202" width="108" height="74" rx="10" fill={surface} stroke={line} />
+        <rect x="156" y="202" width="108" height="74" rx="10" fill={surface} stroke={line} />
+        <rect x="50" y="218" width="60" height="8" rx="4" fill={text} opacity="0.6" />
+        <rect x="50" y="234" width="80" height="12" rx="4" fill={text} opacity="0.85" />
+        <rect x="170" y="218" width="60" height="8" rx="4" fill={text} opacity="0.6" />
+        <rect x="170" y="234" width="80" height="12" rx="4" fill={text} opacity="0.85" />
+      </g>,
+      // 1: detail
+      <g key="b">
+        <rect x="36" y="58" width="228" height="120" rx="12" fill={accent} opacity="0.9" />
+        <circle cx="80" cy="118" r="22" fill={accentText} opacity="0.95" />
+        <rect x="36" y="194" width="180" height="16" rx="4" fill={text} opacity="0.9" />
+        <rect x="36" y="218" width="228" height="8" rx="4" fill={muted} />
+        <rect x="36" y="232" width="200" height="8" rx="4" fill={muted} />
+        <rect x="36" y="246" width="160" height="8" rx="4" fill={muted} />
+        <rect x="36" y="270" width="228" height="32" rx="16" fill={accent} />
+      </g>,
+      // 2: form
+      <g key="c">
+        <rect x="36" y="58" width="160" height="18" rx="4" fill={text} opacity="0.9" />
+        <rect x="36" y="92" width="100" height="10" rx="4" fill={muted} />
+        <rect x="36" y="116" width="228" height="36" rx="8" fill={surface} stroke={line} />
+        <rect x="36" y="162" width="228" height="36" rx="8" fill={surface} stroke={line} />
+        <rect x="36" y="208" width="228" height="80" rx="8" fill={surface} stroke={line} />
+        <rect x="36" y="298" width="228" height="32" rx="16" fill={accent} />
+      </g>,
+    ];
+    return (
+      <svg viewBox="0 0 300 340" className="w-[55%] h-auto" aria-hidden>
+        <rect x="14" y="6" width="272" height="328" rx="32" fill={bg} stroke={line} strokeWidth="1.5" />
+        <rect x="120" y="14" width="60" height="6" rx="3" fill={line} />
+        <rect x="36" y="34" width="80" height="8" rx="4" fill={muted} />
+        <circle cx="252" cy="38" r="8" fill={surface} stroke={line} />
+        {variants[seed % variants.length]}
+      </svg>
+    );
+  }
+
+  const variants = [
+    // 0: dashboard
+    <g key="a">
+      <rect x="14" y="50" width="78" height="194" rx="6" fill={surface} stroke={line} />
+      <rect x="24" y="62" width="58" height="8" rx="3" fill={accent} />
+      <rect x="24" y="82" width="50" height="6" rx="3" fill={muted} />
+      <rect x="24" y="98" width="50" height="6" rx="3" fill={muted} />
+      <rect x="24" y="114" width="50" height="6" rx="3" fill={muted} />
+      <rect x="106" y="50" width="288" height="60" rx="6" fill={accent} opacity="0.95" />
+      <rect x="120" y="68" width="120" height="10" rx="4" fill={accentText} opacity="0.85" />
+      <rect x="120" y="84" width="80" height="8" rx="4" fill={accentText} opacity="0.7" />
+      <rect x="106" y="122" width="138" height="122" rx="6" fill={surface} stroke={line} />
+      <rect x="120" y="138" width="80" height="8" rx="4" fill={text} opacity="0.85" />
+      <rect x="120" y="156" width="110" height="6" rx="3" fill={muted} />
+      <path d="M120 220 L150 200 L180 215 L210 190 L230 205" stroke={accent} strokeWidth="2.5" fill="none" />
+      <rect x="256" y="122" width="138" height="58" rx="6" fill={surface} stroke={line} />
+      <rect x="256" y="186" width="138" height="58" rx="6" fill={surface} stroke={line} />
+    </g>,
+    // 1: list/table
+    <g key="b">
+      <rect x="14" y="50" width="380" height="40" rx="6" fill={surface} stroke={line} />
+      <rect x="28" y="64" width="120" height="12" rx="4" fill={text} opacity="0.85" />
+      <rect x="320" y="62" width="60" height="16" rx="8" fill={accent} />
+      <g>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <g key={i} transform={`translate(0, ${100 + i * 30})`}>
+            <rect x="14" y="0" width="380" height="26" rx="4" fill={surface} stroke={line} opacity="0.85" />
+            <circle cx="32" cy="13" r="8" fill={accent} opacity="0.7" />
+            <rect x="50" y="9" width="90" height="8" rx="3" fill={text} opacity="0.75" />
+            <rect x="160" y="9" width="60" height="8" rx="3" fill={muted} />
+            <rect x="250" y="9" width="80" height="8" rx="3" fill={muted} />
+          </g>
+        ))}
+      </g>
+    </g>,
+    // 2: gallery
+    <g key="c">
+      <rect x="14" y="50" width="120" height="90" rx="6" fill={accent} />
+      <rect x="142" y="50" width="120" height="90" rx="6" fill={surface} stroke={line} />
+      <rect x="270" y="50" width="124" height="90" rx="6" fill={surface} stroke={line} />
+      <rect x="14" y="150" width="120" height="94" rx="6" fill={surface} stroke={line} />
+      <rect x="142" y="150" width="120" height="94" rx="6" fill={accent} opacity="0.85" />
+      <rect x="270" y="150" width="124" height="94" rx="6" fill={surface} stroke={line} />
+    </g>,
+    // 3: split
+    <g key="d">
+      <rect x="14" y="50" width="180" height="194" rx="6" fill={accent} />
+      <rect x="30" y="80" width="100" height="14" rx="4" fill={accentText} opacity="0.9" />
+      <rect x="30" y="106" width="140" height="8" rx="4" fill={accentText} opacity="0.7" />
+      <rect x="30" y="120" width="120" height="8" rx="4" fill={accentText} opacity="0.7" />
+      <rect x="30" y="200" width="100" height="26" rx="13" fill={accentText} />
+      <rect x="210" y="50" width="184" height="60" rx="6" fill={surface} stroke={line} />
+      <rect x="210" y="122" width="184" height="60" rx="6" fill={surface} stroke={line} />
+      <rect x="210" y="194" width="184" height="50" rx="6" fill={surface} stroke={line} />
+    </g>,
+  ];
+  return (
+    <svg viewBox="0 0 408 256" className="w-[92%] h-auto" aria-hidden>
+      <rect x="2" y="2" width="404" height="252" rx="10" fill={bg} stroke={line} strokeWidth="1.5" />
+      <circle cx="16" cy="20" r="3.5" fill={accent} />
+      <circle cx="28" cy="20" r="3.5" fill={muted} />
+      <circle cx="40" cy="20" r="3.5" fill={muted} />
+      <rect x="120" y="14" width="160" height="12" rx="6" fill={surface} stroke={line} />
+      <line x1="2" y1="38" x2="406" y2="38" stroke={line} strokeWidth="1" />
       {variants[seed % variants.length]}
     </svg>
   );
