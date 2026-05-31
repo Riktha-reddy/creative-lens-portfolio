@@ -197,6 +197,16 @@ function UIUXBody({ p }: { p: ProjectData }) {
       )}
       {p.wireframes && p.wireframes.length > 0 && (
         <Section index="04" title="Wireframes">
+          {/* Low-fidelity */}
+          <div className="mb-10 flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+              Low fidelity
+            </span>
+            <span className="h-px flex-1 bg-border" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              Sketches & structure
+            </span>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {p.wireframes.map((w, i) => (
               <motion.figure
@@ -224,6 +234,52 @@ function UIUXBody({ p }: { p: ProjectData }) {
               </motion.figure>
             ))}
           </div>
+
+          {/* High-fidelity carousel */}
+          <div className="mt-16 mb-8 flex items-center gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-foreground/50">
+              High fidelity
+            </span>
+            <span className="h-px flex-1 bg-border" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              Polished mockups
+            </span>
+          </div>
+          <Carousel opts={{ align: "start", loop: true }} className="px-2">
+            <CarouselContent>
+              {p.wireframes.map((w, i) => (
+                <CarouselItem
+                  key={`hi-${w.title}`}
+                  className="md:basis-1/2 lg:basis-1/2"
+                >
+                  <motion.figure
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.5, delay: i * 0.05 }}
+                    className="rounded-2xl border border-border p-5 bg-[color-mix(in_oklab,var(--cream)_4%,var(--ink))]"
+                  >
+                    <div className="aspect-[4/3] flex items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--cream)_6%,var(--ink))] border border-border overflow-hidden">
+                      <HiFiMockup type={w.type} seed={i} />
+                    </div>
+                    <figcaption className="mt-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="font-display text-lg font-semibold">{w.title}</h4>
+                        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[var(--cream)] border border-[var(--cream)]/40 rounded-full px-2 py-0.5">
+                          Hi-fi
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs text-foreground/70 leading-relaxed">
+                        {w.caption}
+                      </p>
+                    </figcaption>
+                  </motion.figure>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
         </Section>
       )}
       {p.outcomes && p.outcomes.length > 0 && (
