@@ -17,22 +17,22 @@ import craft3 from "@/assets/craft-3.jpg";
 const hobbies = [
   {
     title: "Painting",
-    sub: "Oil & acrylic",
+    sub: "Oil, acrylic, and watercolor",
     body: "Loose, expressive studies in colour and gesture — mostly weekends.",
     cover: painting,
     gallery: [painting1, painting2, painting3],
   },
   {
     title: "Photography",
-    sub: "35mm + medium format",
-    body: "Street and architectural work, mostly shot in Lisbon and Tokyo.",
+    sub: "With Iphone 14 Plus",
+    body: "Things in our daily life that we often forget to admire.",
     cover: photography,
     gallery: [photo1, photo2, photo3],
   },
   {
     title: "Arts & Crafts",
     sub: "Paper, thread, wood",
-    body: "Hands-on making — bookbinding, collage, and small printed objects.",
+    body: "There's something so magical about hand crafting.",
     cover: crafts,
     gallery: [craft1, craft2, craft3],
   },

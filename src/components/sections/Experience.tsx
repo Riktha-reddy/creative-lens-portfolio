@@ -1,16 +1,16 @@
 import { motion } from "motion/react";
 
 const work = [
-  { year: "2024 — Now", role: "Lead Product Designer & Engineer", org: "Independent Studio", note: "Design systems, AI tooling, brand-led product." },
-  { year: "2022 — 2024", role: "Senior UI/UX Designer", org: "Northbeam Labs", note: "Owned web platform and onboarding redesign (+38% activation)." },
-  { year: "2020 — 2022", role: "Frontend Developer", org: "Forma Interactive", note: "Built component libraries used across 14 production apps." },
-  { year: "2018 — 2020", role: "Product Designer", org: "Studio Veil", note: "Editorial, e-commerce, and brand systems for early-stage startups." },
+  { year: "2025-Now", role: "Programmer Aalyst Trainee ",org: "Cognizant", note: "Java Developer Intern, working on a project using Java, Spring Boot, and MySQL." },
+  { year: "2025",role:"UI/UX Designer", org: "Moovicart", note: "Designed UI/UX for a mobile application using Figma." },
+  { year: "2023",role:"UI/UX Design Intern", org: "Echo-day jobs", note: "Designed UI/UX for a mobile application using Figma." },
+  { year: "2022",role:"UI/UX Design Intern", org: "NFC Solutions", note: "Designed UI/UX for a Website using Figma and Designed marketing materials for the clients." },
 ];
 
 const education = [
-  { year: "2023", role: "Interaction Design — Advanced", org: "IDF", note: "Specialization in motion and complex flows." },
-  { year: "2019", role: "B.Sc. Computer Science", org: "University of Lisbon", note: "Focus on HCI, compilers, and graphics." },
-  { year: "2017", role: "Visual Communication Diploma", org: "ESAD", note: "Editorial design and typography." },
+  { year: "2021-2025", role: "B.tech in Computer Science and Engineering", org: "Institute of Aeronautical Engineering", note: "Specialization in programming, data structures, and algorithms"},
+  { year: "2019-2021", role: "Intermediate", org: "Trividyaa junior college", note: "Focus Maths, Physics, and Chemistry" },
+  { year: "2019", role: "Marticulation", org: "Kendriya Vidyalaya, AFS Begumpet", note: " Basic education, scored: 88.8%" },
 ];
 
 export function Experience() {

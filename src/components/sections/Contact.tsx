@@ -5,9 +5,9 @@ import { setCursorMode } from "@/components/CustomCursor";
 import { SectionHeader } from "./Experience";
 
 const socials = [
-  { label: "Email", value: "hello@studio.dev", href: "mailto:hello@studio.dev" },
-  { label: "GitHub", value: "@studio", href: "#" },
-  { label: "Dribbble", value: "@studio", href: "#" },
+  { label: "Email", value: "rikthawork@gmail.com", href: "mailto:rikthawork@gmail.com" },
+  { label: "GitHub", value: "Riktha-reddy", href: "https://github.com/Riktha-reddy" },
+  { label: "Behance", value: "rikthareddy18", href: "https://www.behance.net/rikthareddy18" },
   { label: "Read.cv", value: "/studio", href: "#" },
 ];
 
@@ -17,10 +17,23 @@ export function Contact() {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSending(true);
-    await new Promise((r) => setTimeout(r, 700));
-    setSending(false);
-    (e.target as HTMLFormElement).reset();
-    toast.success("Message sent. I’ll get back within 24h.");
+    const form = e.currentTarget;
+    const data = new FormData(form);
+  
+    try {
+      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error("Failed");
+      form.reset();
+      toast.success("Message sent. I'll get back within 24h.");
+    } catch {
+      toast.error("Something went wrong. Try email instead.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -84,7 +97,7 @@ export function Contact() {
               Currently
             </div>
             <p className="font-display text-xl leading-snug">
-              Taking on <span className="bg-[var(--cream)] text-primary px-2">2 projects</span> for the next quarter — design systems, marketing sites, and front-of-house product work.
+              Studying <span className="bg-[var(--cream)] text-primary px-2">AI & agentic AI</span> — so when the robots take over, I’m on the guest list, not the to-do list.
             </p>
           </div>
         </aside>
