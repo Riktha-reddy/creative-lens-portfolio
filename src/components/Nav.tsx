@@ -33,7 +33,7 @@ export function Nav() {
           className="font-display text-lg font-semibold tracking-tight flex items-center gap-2"
         >
           <span className="inline-block w-2 h-2 bg-[var(--cream)] rounded-full" />
-          studio<span className="text-primary">/</span>dev
+          Riktha Reddy<span className="text-primary">;)</span>
         </a>
 
         <nav className="hidden md:flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.2em]">
