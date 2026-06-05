@@ -1,5 +1,14 @@
 export type ProjectKind = "uiux" | "code";
 
+export interface ProjectImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+  type?: "mobile" | "desktop" | "hero";
+  width?: number;
+  height?: number;
+}
+
 export interface ProjectData {
   slug: string;
   kind: ProjectKind;
@@ -19,13 +28,15 @@ export interface ProjectData {
   overview?: string;
   problem?: string;
   process?: { title: string; body: string }[];
-  wireframes?: { title: string; caption: string; type: "mobile" | "desktop" }[];
+  wireframes?: { title: string; caption: string; type: "mobile" | "desktop"; image?: string | ProjectImage }[];
   outcomes?: string[];
+  image?: string | ProjectImage;
   // Technical
   longDescription?: string;
   features?: string[];
   architecture?: string;
   codeSnippet?: string;
+  publication?: string;
 }
 
 export const projects: ProjectData[] = [
@@ -76,49 +87,67 @@ export const projects: ProjectData[] = [
     ],
   },
   {
-    slug: "pulse-realtime-sdk",
-    kind: "code",
-    title: "Pulse Realtime SDK",
-    tag: "Infra / TypeScript",
-    description:
-      "A websocket-backed sync engine powering collaborative cursors at 60fps.",
-    meta: "2025 • Open source",
-    year: "2025",
-    role: "Author & maintainer",
-    github: "https://github.com/example/pulse-realtime",
-    stack: ["TypeScript", "WebSockets", "Rust (server)", "Vitest"],
-    longDescription:
-      "Pulse is a tiny realtime sync engine that powers presence, cursors, and CRDT-style state for collaborative apps. It maintains a steady 60fps under 200 concurrent participants and reconnects gracefully across network drops.",
-    features: [
-      "Exponential backoff reconnect with jitter",
-      "Binary frames + delta encoding (≈80% bandwidth saving vs JSON)",
-      "Typed channel API with Zod-validated payloads",
-      "First-class React hooks: useChannel, usePresence, useCursors",
-      "Optional Rust edge server for sub-20ms regional fanout",
-    ],
-    architecture:
-      "Client maintains a single multiplexed socket. A central Channel router fans events to React subscribers via a tiny store with structural sharing. Server is a stateless fanout node backed by Redis pub/sub.",
-    codeSnippet: `export const channel = createChannel({
-  url: env.WS_URL,
-  reconnect: { backoff: "exp", max: 8 },
-});
+  slug: "ai-therapist-app",
+  kind: "code",
+  title: "AI Therapist App",
+  tag: "AI / Python",
+  description:
+    "An AI-powered conversational agent providing a private, non-judgmental mental health support space for college students.",
+  meta: "2026 • Open source & Published",
+  year: "2026",
+  role: "Author & Lead Developer",
+  github: "https://github.com/Riktha-reddy/therapist-app",
+  publication: "https://ieeexplore.ieee.org/document/10940967/",
+  stack: ["Python", "AutoGen", "NLTK", "Matplotlib"],
+  longDescription:
+    "Built to address academic pressures and social stigma, this AI Therapist acts as an accessible conversational agent. It leverages multi-agent orchestration to conduct text-based support sessions, run sentiment analysis, and securely track user emotional patterns over time.",
+  features: [
+    "Multi-agent conversation workflows powered by AutoGen",
+    "Real-time NLP sentiment analysis classifying tone as positive, negative, or neutral",
+    "Automated emotional data reports and trend visualizations using Matplotlib",
+    "Actionable mental health insights and proactive coping strategy recommendations",
+    "Peer-reviewed and published research framework featured in IEEE Xplore",
+  ],
+  architecture:
+    "The system uses AutoGen to orchestrate specialist agents (Conversational Guide, Sentiment Analyzer, and Report Generator). User inputs pass through NLTK pipelines for emotional tone evaluation. Historical scores populate localized data structures to graph mood fluctuations without compromising student privacy.",
+  codeSnippet: `import autogen
+from nltk.sentiment import SentimentIntensityAnalyzer
+import matplotlib.pyplot as plt
 
-channel.on("cursor", (msg) => {
-  store.upsert(msg.userId, msg.point);
-});
+# Initialize AutoGen orchestration agents
+assistant = autogen.AssistantAgent(
+    name="Therapist_Assistant",
+    llm_config={"config_list": config_list, "temperature": 0.7}
+)
+user_proxy = autogen.UserProxyAgent(name="Student_User")
 
-await channel.subscribe("room:42");`,
-    reveal: `export const channel = createChannel({
-  url: env.WS_URL,
-  reconnect: { backoff: "exp", max: 8 },
-});
+# Analyze emotional tone over time
+sia = SentimentIntensityAnalyzer()
+score = sia.polarity_scores(student_input)
 
-channel.on("cursor", (msg) => {
-  store.upsert(msg.userId, msg.point);
-});
+# Plot emotional journey
+plt.plot(session_dates, sentiment_scores)
+plt.title("Student Wellbeing Journey")`,
+  reveal: `import autogen
+from nltk.sentiment import SentimentIntensityAnalyzer
+import matplotlib.pyplot as plt
 
-await channel.subscribe("room:42");`,
-  },
+# Initialize AutoGen orchestration agents
+assistant = autogen.AssistantAgent(
+    name="Therapist_Assistant",
+    llm_config={"config_list": config_list, "temperature": 0.7}
+)
+user_proxy = autogen.UserProxyAgent(name="Student_User")
+
+# Analyze emotional tone over time
+sia = SentimentIntensityAnalyzer()
+score = sia.polarity_scores(student_input)
+
+# Plot emotional journey
+plt.plot(session_dates, sentiment_scores)
+plt.title("Student Wellbeing Journey")`,
+},
+
   {
     slug: "forma-os",
     kind: "uiux",
@@ -162,126 +191,123 @@ await channel.subscribe("room:42");`,
     ],
   },
   {
-    slug: "glyph-cli",
-    kind: "code",
-    title: "Glyph CLI",
-    tag: "Tooling / Rust",
-    description:
-      "Static analysis for icon libraries — flags drift, duplicates and accessibility gaps.",
-    meta: "2024 • Solo build",
-    year: "2024",
-    role: "Solo build",
-    github: "https://github.com/example/glyph-cli",
-    stack: ["Rust", "Rayon", "SVG parser", "GitHub Actions"],
-    longDescription:
-      "Glyph is a CLI that audits icon libraries for consistency. It detects non-standard viewBoxes, duplicate paths, missing titles for screen readers, and stroke-width drift — running across 5,000+ icons in under a second.",
-    features: [
-      "Parallel parsing via Rayon (sub-second runs on 5k icons)",
-      "Rules engine with JSON config and per-rule severity",
-      "GitHub Action with PR-comment integration",
-      "JSON, SARIF, and human-readable reporters",
-    ],
-    architecture:
-      "Single-binary Rust CLI. SVGs are parsed into a normalized IR, then a vector of rules is applied in parallel. Findings stream into pluggable reporters.",
-    codeSnippet: `fn audit(set: &IconSet) -> Vec<Finding> {
-  set.icons.par_iter()
-    .filter_map(|i| {
-      if i.viewbox != "0 0 24 24" {
-        Some(Finding::warn(i, "non-standard viewbox"))
-      } else { None }
-    })
-    .collect()
-}`,
-    reveal: `fn audit(set: &IconSet) -> Vec<Finding> {
-  set.icons.par_iter()
-    .filter_map(|i| {
-      if i.viewbox != "0 0 24 24" {
-        Some(Finding::warn(i, "non-standard viewbox"))
-      } else { None }
-    })
-    .collect()
-}`,
-  },
+  slug: "soil-type-detection",
+  kind: "code",
+  title: "Soil Type Detection & Crop Predictor",
+  tag: "ML / Computer Vision",
+  description:
+    "A computer vision pipeline that identifies soil classification types and predicts optimal crop matches for agricultural yield.",
+  meta: "2026 • Open source",
+  year: "2026",
+  role: "Author & Developer",
+  github: "https://github.com/Riktha-reddy/Soil-type-detection",
+  stack: ["Python", "TensorFlow", "OpenCV", "Scikit-Learn"],
+  longDescription:
+    "An intelligent agricultural assistant designed to bridge the gap between computer vision and farming. The project processes macro imagery of regional soils, applies a binary classification matrix to determine foundational composition qualities, and cross-references results against agronomic rules to output optimal crop suggestions.",
+  features: [
+    "Image preprocessing and normalization workflows built using OpenCV",
+    "Deep-learning binary classification model optimized for granular soil texture types",
+    "Predictive mapping engine that matches analyzed soil traits to high-yield crops",
+    "Localized data inference architecture running completely on lightweight Python frameworks",
+  ],
+  architecture:
+    "Raw environmental imagery is ingested and cleaned via OpenCV contrast and noise-reduction filters. Feature extraction arrays pass into a binary classification network to resolve basic soil taxonomy. The resultant confidence scores are fed into a downstream decision-tree classifier that returns target crop matches.",
+  codeSnippet: `import cv2
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier
+
+# Ingest and preprocess agricultural soil sample
+image = cv2.imread("soil_sample.jpg")
+resized = cv2.resize(image, (224, 224))
+normalized = resized / 255.0
+
+# Extract classification vectors and map to crop rules
+features = np.expand_dims(normalized, axis=0)
+soil_type = model.predict(features)
+
+# Query predictive agronomy matrix
+crop_engine = DecisionTreeClassifier()
+recommended_crop = crop_engine.predict([soil_type])`,
+  reveal: `import cv2
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier
+
+# Ingest and preprocess agricultural soil sample
+image = cv2.imread("soil_sample.jpg")
+resized = cv2.resize(image, (224, 224))
+normalized = resized / 255.0
+
+# Extract classification vectors and map to crop rules
+features = np.expand_dims(normalized, axis=0)
+soil_type = model.predict(features)
+
+# Query predictive agronomy matrix
+crop_engine = DecisionTreeClassifier()
+recommended_crop = crop_engine.predict([soil_type])`,
+},
   {
-    slug: "lumen-health",
-    kind: "uiux",
-    title: "Lumen Health",
-    tag: "Healthcare / Mobile",
-    description:
-      "A calm, jargon-free companion for patients managing chronic conditions.",
-    meta: "2023 • Product designer",
-    year: "2023",
-    role: "Product designer",
-    client: "Lumen Health",
-    stack: ["Figma", "Lottie", "Maze"],
-    overview:
-      "Lumen helps patients with chronic conditions track symptoms, medications, and appointments without feeling clinical. The tone is warm; the data is precise.",
-    problem:
-      "Existing apps either oversimplified (and lost clinical value) or overwhelmed (and lost patients). Adherence rates were under 40%.",
-    process: [
-      {
-        title: "Co-design",
-        body: "Ran six co-design sessions with patients and two with care teams. Sketched the daily check-in flow together.",
-      },
-      {
-        title: "Plain language",
-        body: "Worked with a medical writer to rewrite every label. No acronyms, no medical Latin, no shame.",
-      },
-      {
-        title: "Test",
-        body: "Eight weeks of in-the-wild testing with 24 patients. Iterated weekly on the medication reminder flow.",
-      },
-    ],
-    outcomes: [
-      "Daily check-in adherence: 38% → 71%",
-      "Net Promoter Score: 64",
-      "Featured by App Store in Health & Fitness",
-    ],
-    wireframes: [
-      { title: "Daily check-in", caption: "Three-tap symptom logger with mood scale", type: "mobile" },
-      { title: "Medication reminder", caption: "Calm full-screen prompt with snooze & log", type: "mobile" },
-      { title: "Care timeline", caption: "Vertical history of meds, symptoms & visits", type: "mobile" },
-    ],
-  },
-  {
-    slug: "atlas-edge-router",
-    kind: "code",
-    title: "Atlas Edge Router",
-    tag: "Backend / Workers",
-    description:
-      "Edge-first router with type-safe RPC and zero-config auth middleware.",
-    meta: "2023 • Maintainer",
-    year: "2023",
-    role: "Maintainer",
-    github: "https://github.com/example/atlas-edge-router",
-    stack: ["TypeScript", "Cloudflare Workers", "Zod", "Vitest"],
-    longDescription:
-      "Atlas is a tiny edge-native router with first-class TypeScript ergonomics. Define routes with input validation, middleware composition, and typed handlers — deploy anywhere V8 isolates run.",
-    features: [
-      "Sub-100 LOC core, tree-shakeable",
-      "Zod-powered input validation with inferred handler types",
-      "Composable middleware (auth, rate-limit, cors) — no class inheritance",
-      "Adapters: Cloudflare Workers, Bun, Node, Deno",
-    ],
-    architecture:
-      "A single router object compiles routes into a radix tree at construction. Handlers are pure functions taking a typed context. Middleware is just function composition — no DI container, no magic.",
-    codeSnippet: `export const route = router({
-  POST: handler()
-    .input(z.object({ name: z.string() }))
-    .use(requireAuth)
-    .run(async ({ data, user }) => {
-      return db.post.create({ ...data, userId: user.id });
-    }),
-});`,
-    reveal: `export const route = router({
-  POST: handler()
-    .input(z.object({ name: z.string() }))
-    .use(requireAuth)
-    .run(async ({ data, user }) => {
-      return db.post.create({ ...data, userId: user.id });
-    }),
-});`,
-  },
+  slug: "ventao-journey-logger",
+  kind: "uiux",
+  title: "Ventao — Banking, redrawn",
+  tag: "Product / Mobile Design",
+  description:
+    "A field employee mobility app mapping routes, dispatch assignments, and journey history with zero operational friction.",
+  meta: "2023 • Product Designer",
+  year: "2023",
+  role: "UI/UX & Product Designer",
+  client: "Internal / Field Operations",
+  liveUrl: "https://behance.net",
+  stack: ["Figma", "UI Design", "Mobile App Design"],
+  overview:
+    "Ventao simplifies the daily routine of field employees by merging route planning, task tracking, and historic logging into a singular, field-tested mobile interface. The core design thesis: minimize screen interaction time so workers can focus safely on their destinations.",
+  problem:
+    "Field professionals struggle with disjointed workflows—using navigation tools, separate spreadsheets, and manual checklists to report daily operations. This fragmentation leads to inaccurate mileage tracking, missed location objectives, and high cognitive fatigue.",
+  process: [
+    {
+      title: "Discovery",
+      body: "Analyzed day-in-the-life routines of mobile staff. Mapped out core needs: clear next-stop visibility, instant destination confirmation, and friction-free logging during short transits.",
+    },
+    {
+      title: "Define",
+      body: "Established three core UI objectives: high visual hierarchy for real-time map waypoints, a distraction-free checklist matrix, and one-tap access to historical routes.",
+    },
+    {
+      title: "Design",
+      body: "Developed an intuitive, mobile-first design language in Figma. Focused heavily on high-contrast pin drop markers, legible text elements for variable outdoor lighting, and touch targets scaled for rapid movement.",
+    },
+    {
+      title: "Validate",
+      body: "Refined map interaction patterns to ensure route lines and sequential drop-offs remain clear on small form-factor devices, lowering navigation stress.",
+    },
+  ],
+  outcomes: [
+    "Unified route guidance and task management into a single interface",
+    "Streamlined daily operational workflows with high-contrast, glanceable maps",
+    "Built a modular tracking system for verifiable worker journey logs",
+  ],
+  wireframes: [
+    { 
+      title: "Active Map View", 
+      caption: "Interactive route map with current location pinpointing and step-by-step sequential destinations", 
+      type: "mobile",
+      image: "/images/projects/ventao-map-view.png"
+    },
+    { 
+      title: "To-Do List", 
+      caption: "Integrated daily tasks panel embedded below mapping layers for quick task clearance", 
+      type: "mobile",
+      image: "/images/projects/ventao-todo-list.png"
+    },
+    { 
+      title: "Journey History", 
+      caption: "Archived journey logs displaying chronological route histories and completed dispatch summaries", 
+      type: "mobile",
+      image: "/images/projects/ventao-journey-history.png"
+    },
+  ],
+}
+
+
 ];
 
 export const getProject = (slug: string) =>

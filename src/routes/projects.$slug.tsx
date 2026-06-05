@@ -260,8 +260,16 @@ function UIUXBody({ p }: { p: ProjectData }) {
                     className="rounded-2xl border border-border p-5 bg-[color-mix(in_oklab,var(--cream)_4%,var(--ink))]"
                   >
                     <div className="aspect-[4/3] flex items-center justify-center rounded-xl bg-[color-mix(in_oklab,var(--cream)_6%,var(--ink))] border border-border overflow-hidden">
-                      <HiFiMockup type={w.type} seed={i} />
-                    </div>
+            {w.image ? (
+              <img
+                src={typeof w.image === "string" ? w.image : w.image.src}
+                alt={typeof w.image === "string" ? w.title : w.image.alt ?? w.title}
+                className="w-full h-full object-cover object-top"
+              />
+            ) : (
+              <HiFiMockup type={w.type} seed={i} />
+            )}
+          </div>
                     <figcaption className="mt-4">
                       <div className="flex items-center justify-between gap-3">
                         <h4 className="font-display text-lg font-semibold">{w.title}</h4>
